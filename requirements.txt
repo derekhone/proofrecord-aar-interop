@@ -1,0 +1,13 @@
+# proofrecord-aar-interop v0.1.0-rc.4 runtime requirements (hash-pinned).
+# Install:  python3 -m pip install --require-hashes -r requirements.txt
+# Tested: CPython 3.11.17, Linux x86_64, glibc 2.36. Hashes are PyPI's published SHA-256 for the
+# tested wheels and for the source distributions (source builds are untested).
+pynacl==1.6.2 \
+    --hash=sha256:c8a231e36ec2cab018c4ad4358c386e36eede0319a0c41fed24f840b1dac59f6 \
+    --hash=sha256:018494d6d696ae03c7e656e5e74cdfd8ea1326962cc401bcf018f1ed8436811c
+cffi==2.1.1 \
+    --hash=sha256:34e261f78cb6ceaaa36f42f2613f4380d94d9c759a9c73c769ee6e0247364632 \
+    --hash=sha256:dd31f52ea1086513bb9df30f8fcee9b8918323ae067a3d5b78bc826a000712be
+pycparser==3.12 \
+    --hash=sha256:a076f3f489b39b43ed13563a1dafe42447445bec2e294154ec5c57fcdda4c85e \
+    --hash=sha256:f03387877eab82ce01bbdfd0ba7252ee55a90b1c708d5129e2ce915475cf1db6

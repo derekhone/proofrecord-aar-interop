@@ -1,0 +1,47 @@
+{
+ "aar": {
+  "aar_attempts_eligible": 1,
+  "aar_attempts_total": 2,
+  "aar_authorization_id": "ccf2be1f29186e7ccab8fe1e6cadf015a1d3510d307b199047e02aabff419e8b",
+  "aar_decision": "permit",
+  "aar_delegation_subject_credential_id": "1fea89412c94b7d3a3929be96520ce29acda1b93c5144007a2e2c5df0a8d2623",
+  "aar_dispatch_id": "13aa839cd7870376478f78ea537166fc04a608ca37002902ffa7fddd3f49966a",
+  "aar_dispatched_at": 1735689708,
+  "aar_outcome_states": [
+   "consistent"
+  ],
+  "outcome_evidence_note": "AAR outcome observation present; observer key is an AAR test key, not an independently trusted observer",
+  "proofrecord_ref_sha256": "6600736c5da626071a2d53d53978cf22d2f87e56e163204ed12fcc6d49a901d2"
+ },
+ "code": "AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION",
+ "levels": {
+  "aar_conformance": {
+   "pyref_rc": 0,
+   "pyref_result": "Result: conformant"
+  },
+  "cross_record": "MATCH",
+  "proofrecord": "VALID"
+ },
+ "outcome": "MATCH",
+ "proofrecord": {
+  "action": {
+   "action_name": "camera.stream.view",
+   "parameters": {
+    "dwell_seconds": 30,
+    "preset": 3
+   },
+   "parameters_digest": "16e96bcdf39c774b6064a7219af4efed3d99655bfbd82fc58ea55148216ab752",
+   "parameters_encoding": "rfc8949-deterministic-cbor",
+   "target_id": "4d834621ab4dcb823bfd96869243aeed"
+  },
+  "actor_id": "agent:synthetic-camera-agent-01",
+  "authorization_id": "8c9ffb75a843ecab50058070f3e2d73e",
+  "decision": "ALLOW",
+  "expires_at": 1735689900,
+  "key_notice": "SYNTHETIC-DEMONSTRATION-KEY-NOT-PRODUCTION",
+  "kid": "dc0cd8083a8742ba08d0dbe411b72911f8050e91789391ac35c6a04f3fca2f90",
+  "not_before": 1735689690,
+  "proofrecord_id": "9bf399c18145576012aadcfdccd2f3c8"
+ },
+ "tool": "epverify 1.0 (EP-AAR-001)"
+}

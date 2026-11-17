@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using these metadata."
+type: software
+title: "proofrecord-aar-interop: signed ProofRecord and Agent Action Receipts (AAR) interoperability demonstration"
+version: "0.1.0-rc.4"
+license: MIT
+authors:
+  - family-names: "Hone"
+    given-names: "Derek"
+    affiliation: "Remnant Fieldworks Inc."
+abstract: >-
+  Synthetic, offline-verifiable demonstration that an Agent Action Receipts (AAR)
+  bundle cites an Ed25519-signed ExecutionProof ProofRecord and records exactly
+  the action that record authorized. Includes an offline verifier, positive and
+  negative fixtures, 97 targeted tests and a reproducible observation of AAR-
+  conformant bundles that disagree with the ProofRecord. Same-author results;
+  not independent validation; not formal AAR conformance.
+keywords:
+  - ExecutionProof
+  - ProofRecord
+  - Agent Action Receipts
+  - pre-execution authorization
+  - Ed25519
+  - interoperability
+  - offline verification
+  - AI agent accountability
+references:
+  - type: software
+    title: "Agent Action Receipts (AAR)"
+    repository-code: "https://github.com/oneshot2001/aar"
+    commit: "aab2feca93986f92f29f7672dff3464e05163cb5"

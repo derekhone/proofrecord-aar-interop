@@ -1,0 +1,18 @@
+{
+  "upload_type": "software",
+  "title": "proofrecord-aar-interop v0.1.0-rc.4: signed ProofRecord and Agent Action Receipts (AAR) interoperability demonstration",
+  "version": "0.1.0-rc.4",
+  "creators": [
+    {"name": "Hone, Derek", "affiliation": "Remnant Fieldworks Inc."}
+  ],
+  "description": "<p>Synthetic, offline-verifiable demonstration that an Agent Action Receipts (AAR) bundle cites an Ed25519-signed ExecutionProof ProofRecord and records exactly the action that record authorized (action, target, parameter bytes, actor credential, validity window, single use).</p><p>Includes an offline verifier (Python standard library plus PyNaCl/libsodium for Ed25519), positive and negative fixtures, 97 targeted tests, and a reproducible observation of 16 AAR-conformant bundles that disagree with the ProofRecord.</p><p><strong>Limitations:</strong> same-author results, not independent validation; not formal AAR conformance and not endorsed by AAR; synthetic test key only; signing-key misuse (T18) not prevented; cross-bundle replay not tested.</p>",
+  "keywords": ["ExecutionProof", "ProofRecord", "Agent Action Receipts", "pre-execution authorization", "Ed25519", "interoperability", "offline verification", "AI agent accountability"],
+  "related_identifiers": [
+    {"identifier": "https://github.com/oneshot2001/aar/tree/aab2feca93986f92f29f7672dff3464e05163cb5", "relation": "references", "resource_type": "software"},
+    {"identifier": "10.5281/zenodo.22036953", "relation": "isSupplementTo", "resource_type": "publication"},
+    {"identifier": "10.5281/zenodo.22002829", "relation": "references", "resource_type": "dataset"},
+    {"identifier": "10.5281/zenodo.21940858", "relation": "references", "resource_type": "dataset"}
+  ],
+  "license": "mit",
+  "notes": "Release candidate. License: MIT for RF-authored files; third-party files keep their own licenses (Apache-2.0 AAR fixtures). No third-party code is bundled; Ed25519 verification uses the PyNaCl runtime dependency (Apache-2.0, bundling libsodium under ISC). See THIRD_PARTY_NOTICES.md in the archive."
+}

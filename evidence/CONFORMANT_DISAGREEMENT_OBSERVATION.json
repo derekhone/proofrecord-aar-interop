@@ -1,0 +1,305 @@
+{
+ "all_rows": [
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_POSITIVE.cbor",
+   "exit": 0,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION",
+   "rf_outcome": "MATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_PARAMS_REORDERED.cbor",
+   "exit": 0,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION",
+   "rf_outcome": "MATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_NO_CITATION.cbor",
+   "exit": 5,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "NO_CITATION",
+   "rf_outcome": "INSUFFICIENT_EVIDENCE"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_UNKNOWN_DIGEST.cbor",
+   "exit": 5,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "REF_NOT_CITED",
+   "rf_outcome": "INSUFFICIENT_EVIDENCE"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_TWICE.cbor",
+   "exit": 1,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "AMBIGUOUS_CITATION",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_PARAMS_CHANGED.cbor",
+   "exit": 1,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "PARAMETERS_DIGEST",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_PARAMS_STRING.cbor",
+   "exit": 1,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "PARAMETERS_DIGEST",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_PARAMS_EXTRA.cbor",
+   "exit": 1,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "PARAMETERS_DIGEST",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: nonconformant",
+   "bundle": "AAR_TARGET_CHANGED.cbor",
+   "exit": 6,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "PYREF",
+   "rf_outcome": "AAR_NONCONFORMANT"
+  },
+  {
+   "aar_pyref": "Result: nonconformant",
+   "bundle": "AAR_ACTION_CHANGED.cbor",
+   "exit": 6,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "PYREF",
+   "rf_outcome": "AAR_NONCONFORMANT"
+  },
+  {
+   "aar_pyref": "Result: nonconformant",
+   "bundle": "AAR_COMMAND_OPERATION_CHANGED.cbor",
+   "exit": 6,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "PYREF",
+   "rf_outcome": "AAR_NONCONFORMANT"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_DISPATCH_LATE.cbor",
+   "exit": 1,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "EXPIRED_AT_DISPATCH",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_EXPIRED.cbor",
+   "exit": 1,
+   "proofrecord": "PR_EXPIRED_AT_DISPATCH.json",
+   "rf_code": "EXPIRED_AT_DISPATCH",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_NOT_YET_VALID.cbor",
+   "exit": 1,
+   "proofrecord": "PR_NOT_YET_VALID_AT_DISPATCH.json",
+   "rf_code": "DISPATCH_BEFORE_VALIDITY",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_HOLD.cbor",
+   "exit": 1,
+   "proofrecord": "PR_HOLD.json",
+   "rf_code": "DISPATCH_WITHOUT_ALLOW",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_DENY.cbor",
+   "exit": 1,
+   "proofrecord": "PR_DENY.json",
+   "rf_code": "DISPATCH_WITHOUT_ALLOW",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_WRONG_CREDENTIAL.cbor",
+   "exit": 1,
+   "proofrecord": "PR_WRONG_AAR_CREDENTIAL.json",
+   "rf_code": "ACTOR",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_STRING_PARAM_PR.cbor",
+   "exit": 1,
+   "proofrecord": "PR_PARAM_STRING_TYPED.json",
+   "rf_code": "PARAMETERS_DIGEST",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_BOOL_PARAM_PR.cbor",
+   "exit": 1,
+   "proofrecord": "PR_PARAM_BOOL_TYPED.json",
+   "rf_code": "PARAMETERS_DIGEST",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_OTHER_ACTION_PR.cbor",
+   "exit": 1,
+   "proofrecord": "PR_OTHER_ACTION.json",
+   "rf_code": "ACTION_NAME",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_OTHER_TARGET_PR.cbor",
+   "exit": 1,
+   "proofrecord": "PR_OTHER_TARGET.json",
+   "rf_code": "TARGET",
+   "rf_outcome": "MISMATCH"
+  }
+ ],
+ "note": "same-author observation; not a claim of an AAR defect",
+ "observation": [
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_NO_CITATION.cbor",
+   "exit": 5,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "NO_CITATION",
+   "rf_outcome": "INSUFFICIENT_EVIDENCE"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_UNKNOWN_DIGEST.cbor",
+   "exit": 5,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "REF_NOT_CITED",
+   "rf_outcome": "INSUFFICIENT_EVIDENCE"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_TWICE.cbor",
+   "exit": 1,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "AMBIGUOUS_CITATION",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_PARAMS_CHANGED.cbor",
+   "exit": 1,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "PARAMETERS_DIGEST",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_PARAMS_STRING.cbor",
+   "exit": 1,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "PARAMETERS_DIGEST",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_PARAMS_EXTRA.cbor",
+   "exit": 1,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "PARAMETERS_DIGEST",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_DISPATCH_LATE.cbor",
+   "exit": 1,
+   "proofrecord": "PR_ALLOW.json",
+   "rf_code": "EXPIRED_AT_DISPATCH",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_EXPIRED.cbor",
+   "exit": 1,
+   "proofrecord": "PR_EXPIRED_AT_DISPATCH.json",
+   "rf_code": "EXPIRED_AT_DISPATCH",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_NOT_YET_VALID.cbor",
+   "exit": 1,
+   "proofrecord": "PR_NOT_YET_VALID_AT_DISPATCH.json",
+   "rf_code": "DISPATCH_BEFORE_VALIDITY",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_HOLD.cbor",
+   "exit": 1,
+   "proofrecord": "PR_HOLD.json",
+   "rf_code": "DISPATCH_WITHOUT_ALLOW",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_DENY.cbor",
+   "exit": 1,
+   "proofrecord": "PR_DENY.json",
+   "rf_code": "DISPATCH_WITHOUT_ALLOW",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_WRONG_CREDENTIAL.cbor",
+   "exit": 1,
+   "proofrecord": "PR_WRONG_AAR_CREDENTIAL.json",
+   "rf_code": "ACTOR",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_STRING_PARAM_PR.cbor",
+   "exit": 1,
+   "proofrecord": "PR_PARAM_STRING_TYPED.json",
+   "rf_code": "PARAMETERS_DIGEST",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_BOOL_PARAM_PR.cbor",
+   "exit": 1,
+   "proofrecord": "PR_PARAM_BOOL_TYPED.json",
+   "rf_code": "PARAMETERS_DIGEST",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_OTHER_ACTION_PR.cbor",
+   "exit": 1,
+   "proofrecord": "PR_OTHER_ACTION.json",
+   "rf_code": "ACTION_NAME",
+   "rf_outcome": "MISMATCH"
+  },
+  {
+   "aar_pyref": "Result: conformant",
+   "bundle": "AAR_CITES_OTHER_TARGET_PR.cbor",
+   "exit": 1,
+   "proofrecord": "PR_OTHER_TARGET.json",
+   "rf_code": "TARGET",
+   "rf_outcome": "MISMATCH"
+  }
+ ],
+ "pairs_checked": 21,
+ "pyref_conformant_but_rf_not_match": 16
+}
