@@ -1,7 +1,17 @@
 # Security model and custody
 
 ## What a MATCH means
-Under the relying party's pinned public key, a ProofRecord authorized exactly one action, and AAR (if `--aar-pyref` was used, as verified by AAR itself) records exactly that action dispatched once, within the validity window, by the delegated credential named in the ProofRecord.
+Under the relying party's pinned public key, a ProofRecord authorized exactly one action, and AAR records exactly that action dispatched once, within the validity window, by the delegated credential named in the ProofRecord.
+
+The two halves of a MATCH can rest on different trust bases. Since rc.5 the outcome and exit code say which:
+
+| Outcome | Exit | ProofRecord key | AAR signatures / trust | Bytes |
+|---|---|---|---|---|
+| `MATCH` | 0 | pinned out of band (`--key`) | checked by AAR pyref against the relying party's `--aar-trust-policy` (pyref `--trust-policy`); report field `aar_trust_basis` lists `root_kids`, trust-store digest and the policy file's SHA-256 | pyref's reported `bundle_digest` must equal the SHA-256 of the bytes the cross-check read (read once) |
+| `MATCH_AAR_TRUST_UNPINNED` | 8 | pinned | checked by pyref, but only against the AAR keys the bundle itself declares (explicit `--aar-trust-producer-declared`) | same single read |
+| `MATCH_CROSS_CHECK_ONLY` | 7 | pinned | **not checked** | single read |
+
+`--aar-pyref` without a trust option is refused (USAGE/AAR_TRUST_POLICY_REQUIRED, exit 64). Before rc.5 every row above exited 0 and the report did not state the AAR trust basis (issues #1 and #3), and pyref and the cross-check read the bundle path separately (issue #2).
 
 ## What it does NOT mean
 - **Not proof that the authorization decision was correct**, or that the policy was right.

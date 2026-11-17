@@ -19,7 +19,8 @@ KEY = lambda n="PUBLIC_TEST_KEY": os.path.join(ROOT, "fixtures", "keys", n + ".j
 AAR = lambda n: os.path.join(ROOT, "fixtures", "aar", n + ".cbor")
 AT = "1735689800"
 EXIT = {"MATCH": 0, "VALID": 0, "MISMATCH": 1, "INVALID": 2, "UNSUPPORTED": 3, "NOT_AUTHORIZED": 4,
-        "INSUFFICIENT_EVIDENCE": 5, "AAR_NONCONFORMANT": 6, "USAGE": 64}
+        "INSUFFICIENT_EVIDENCE": 5, "AAR_NONCONFORMANT": 6, "MATCH_CROSS_CHECK_ONLY": 7,
+        "MATCH_AAR_TRUST_UNPINNED": 8, "USAGE": 64}  # rc.5: 7 and 8 added (issues #1, #3)
 AAR_DIR = os.environ.get("AAR_DIR")
 results = []
 
@@ -94,9 +95,9 @@ cli("P30", "T13", B("PR_ALLOW", "SMALL_ORDER_KEY"), "INVALID", "KID_UNKNOWN")
 def C(pr, bundle, *extra):
     return B(pr) + ["--aar-bundle", AAR(bundle)] + list(extra)
 
-cli("X01", "T01", C("PR_ALLOW", "AAR_POSITIVE"), "MATCH", XC)
-cli("X02", "T20", C("PR_ALLOW", "AAR_POSITIVE", "--require-outcome"), "MATCH", XC)
-cli("X03", "T03", C("PR_ALLOW", "AAR_PARAMS_REORDERED"), "MATCH", XC)
+cli("X01", "T01", C("PR_ALLOW", "AAR_POSITIVE"), "MATCH_CROSS_CHECK_ONLY", XC)  # rc.4 expected MATCH/exit 0; rc.5 exit 7 (issue #3)
+cli("X02", "T20", C("PR_ALLOW", "AAR_POSITIVE", "--require-outcome"), "MATCH_CROSS_CHECK_ONLY", XC)  # rc.4 expected MATCH/exit 0; rc.5 exit 7 (issue #3)
+cli("X03", "T03", C("PR_ALLOW", "AAR_PARAMS_REORDERED"), "MATCH_CROSS_CHECK_ONLY", XC)  # rc.4 expected MATCH/exit 0; rc.5 exit 7 (issue #3)
 cli("X04", "T16", C("PR_ALLOW", "AAR_NO_CITATION"), "INSUFFICIENT_EVIDENCE", "NO_CITATION")
 cli("X05", "T16", C("PR_ALLOW", "AAR_CITES_UNKNOWN_DIGEST"), "INSUFFICIENT_EVIDENCE", "REF_NOT_CITED")
 cli("X06", "T16", C("PR_ALLOW", "AAR_CITES_TWICE"), "MISMATCH", "AMBIGUOUS_CITATION")
@@ -119,7 +120,7 @@ cli("X22", "T15", C("PR_OTHER_TARGET", "AAR_CITES_OTHER_TARGET_PR"), "MISMATCH",
 cli("X23", "T12", C("PR_REPLAY_SECOND_COPY", "AAR_POSITIVE"), "INSUFFICIENT_EVIDENCE", "REF_NOT_CITED")
 cli("X24", "T12", C("PR_HOLD", "AAR_POSITIVE"), "INSUFFICIENT_EVIDENCE", "REF_NOT_CITED")
 cli("X25", "T19", C("PR_ALLOW", "MUT_DUPLICATE_DISPATCH"), "MISMATCH", "REPLAY")
-cli("X26", "T20", C("PR_ALLOW", "MUT_OUTCOME_REMOVED"), "MATCH", XC)
+cli("X26", "T20", C("PR_ALLOW", "MUT_OUTCOME_REMOVED"), "MATCH_CROSS_CHECK_ONLY", XC)  # rc.4 expected MATCH/exit 0; rc.5 exit 7 (issue #3)
 cli("X27", "T20", C("PR_ALLOW", "MUT_OUTCOME_REMOVED", "--require-outcome"), "INSUFFICIENT_EVIDENCE", "OUTCOME_ABSENT")
 cli("X28", "T20", C("PR_ALLOW", "MUT_OUTCOME_CONTRADICTED", "--require-outcome"), "MISMATCH", "OUTCOME_NOT_CONSISTENT")
 cli("X29", "T05", C("PR_ALLOW", "MUT_PARAMS_BYTES_SWAPPED_KEEP_DIGEST"), "MISMATCH", "PARAMETERS_VALUE")
@@ -129,10 +130,19 @@ cli("X34", "T19", C("PR_ALLOW", "MUT_DISPATCH_UNBOUND"), "MISMATCH", "UNBOUND_DI
 cli("X35", "T19", C("PR_ALLOW", "MUT_DISPATCH_EDGE_CONFLICT"), "MISMATCH", "DISPATCH_EDGE_CONFLICT")
 cli("X31", "T13", C("TAMPER_PARAMS_RESIGNED_DIGEST", "AAR_POSITIVE"), "INVALID", "SIG_INVALID")
 cli("X32", "-", B("PR_ALLOW") + ["--aar-bundle", AAR("AAR_POSITIVE"), "--aar-pyref", "/nonexistent"], "USAGE", "AT_REQUIRED")
+# rc.5 rows (issues #1-#3)
+TP = lambda n: os.path.join(ROOT, "fixtures", "aar_trust", n + ".trust-policy.json")
+cli("X36", "I3", C("PR_ALLOW", "MUT_RECEIPT_SIGNATURES_BROKEN"), "MATCH_CROSS_CHECK_ONLY", XC)  # broken AAR sigs never exit 0 here
+cli("X37", "I1", C("PR_ALLOW", "AAR_POSITIVE", "--aar-trust-policy", TP("AAR_POSITIVE")), "USAGE", "TRUST_OPTION_WITHOUT_PYREF")
+cli("X38", "I1", C("PR_ALLOW", "AAR_POSITIVE", "--aar-pyref", "/nonexistent", "--at", AT, "--aar-trust-policy",
+                   TP("AAR_POSITIVE"), "--aar-trust-producer-declared"), "USAGE", "TRUST_OPTIONS_CONFLICT")
 
 # ---- Full AAR conformance level (only when AAR_DIR is supplied) --------------
 if AAR_DIR:
-    def F(pr, bundle, *extra):
+    def F(pr, bundle, *extra):  # rc.5: every full check pins that bundle's AAR trust policy (test pin)
+        return C(pr, bundle, "--aar-pyref", AAR_DIR, "--at", AT, "--aar-trust-policy", TP(bundle), *extra)
+
+    def FN(pr, bundle, *extra):  # full check with the trust options given explicitly
         return C(pr, bundle, "--aar-pyref", AAR_DIR, "--at", AT, *extra)
     FULL = "AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION"
     cli("F01", "T01", F("PR_ALLOW", "AAR_POSITIVE", "--require-outcome"), "MATCH", FULL)
@@ -147,6 +157,13 @@ if AAR_DIR:
     cli("F10", "T20", F("PR_ALLOW", "MUT_OUTCOME_CONTRADICTED"), "AAR_NONCONFORMANT", "PYREF")
     cli("F11", "T16", F("PR_ALLOW", "AAR_NO_CITATION"), "INSUFFICIENT_EVIDENCE", "NO_CITATION")
     cli("F12", "T15", F("PR_OTHER_ACTION", "AAR_CITES_OTHER_ACTION_PR"), "MISMATCH", "ACTION_NAME")
+    # rc.5 rows
+    cli("F13", "I1", FN("PR_ALLOW", "AAR_POSITIVE"), "USAGE", "AAR_TRUST_POLICY_REQUIRED")
+    cli("F14", "I1", FN("PR_ALLOW", "AAR_POSITIVE", "--aar-trust-producer-declared"), "MATCH_AAR_TRUST_UNPINNED",
+        FULL + "_AAR_TRUST_UNPINNED")
+    cli("F15", "I1", FN("PR_ALLOW", "AAR_POSITIVE", "--aar-trust-policy", TP("WRONG_ROOT_KID")), "AAR_NONCONFORMANT", "PYREF")
+    cli("F16", "I1", FN("PR_ALLOW", "AAR_POSITIVE", "--aar-trust-policy", TP("AAR_PARAMS_CHANGED")), "AAR_NONCONFORMANT", "PYREF")
+    cli("F17", "I3", F("PR_ALLOW", "MUT_RECEIPT_SIGNATURES_BROKEN"), "AAR_NONCONFORMANT", "PYREF")
 
 # ---- Unit tests --------------------------------------------------------------
 V1 = ("d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a", "",
@@ -180,6 +197,41 @@ unit("U16", "T03", lambda: detcbor.encode({"preset": 3, "dwell_seconds": 30}) ==
 unit("U17", "T04", lambda: raises(lambda: rfcj.parse(b'{"a":"\\ud800"}'), rfcj.CJError), "RF-CJ-1 rejects lone surrogate")
 unit("U18", "T04", lambda: not P._str("e\u0301") and P._str("\u00e9"), "ProofRecord text fields must be NFC (decomposed form rejected)")
 unit("U19", "-", lambda: detcbor.encode(detcbor.decode(open(AAR("AAR_POSITIVE"), "rb").read())) == open(AAR("AAR_POSITIVE"), "rb").read(), "detCBOR round-trips the AAR bundle byte-identically")
+
+# rc.5 guard units: pyref is replaced by a stub so only the epverify guard decides the row
+import io, contextlib, hashlib, types  # noqa: E402
+from epverify import cli as CLI  # noqa: E402
+
+
+def _stub_run(stdout):
+    def run(cmd, *k, **kw):
+        return types.SimpleNamespace(returncode=0, stdout=stdout, stderr="")
+    return run
+
+
+def _guard(stdout, extra):
+    real = CLI.subprocess.run
+    CLI.subprocess.run = _stub_run(stdout)
+    buf = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(buf):
+            rc = CLI.main(B("PR_ALLOW") + ["--aar-bundle", AAR("AAR_POSITIVE"), "--aar-pyref", "/stub", "--at", AT] + extra)
+    finally:
+        CLI.subprocess.run = real
+    rep = json.loads(buf.getvalue())
+    return rc, rep["outcome"], rep["code"]
+
+
+_GOOD = hashlib.sha256(open(AAR("AAR_POSITIVE"), "rb").read()).hexdigest()
+_TPA = ["--aar-trust-policy", os.path.join(ROOT, "fixtures", "aar_trust", "AAR_POSITIVE.trust-policy.json")]
+unit("U20", "I2", lambda: _guard("Trust policy: externally pinned\nResult: conformant\n  bundle_digest: %s\n" % ("0" * 64), _TPA)
+     == (6, "AAR_NONCONFORMANT", "PYREF_BUNDLE_DIGEST_MISMATCH"), "stub pyref reports other bytes: refused (exit 6)")
+unit("U21", "I2", lambda: _guard("Trust policy: externally pinned\nResult: conformant\n", _TPA)
+     == (6, "AAR_NONCONFORMANT", "PYREF_BUNDLE_DIGEST_MISMATCH"), "stub pyref reports no bundle digest: refused (exit 6)")
+unit("U22", "I1", lambda: _guard("Trust policy: producer-declared only\nResult: conformant\n  bundle_digest: %s\n" % _GOOD, _TPA)
+     == (6, "AAR_NONCONFORMANT", "PYREF_TRUST_BASIS_UNEXPECTED"), "pin supplied but pyref did not apply it: refused (exit 6)")
+unit("U23", "I1", lambda: _guard("Trust policy: externally pinned\nResult: conformant\n  bundle_digest: %s\n" % _GOOD, _TPA)
+     == (0, "MATCH", "AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION"), "guard positive control: consistent stub report reaches MATCH")
 
 # ---- Report ------------------------------------------------------------------
 fails = [r for r in results if not r[2]]

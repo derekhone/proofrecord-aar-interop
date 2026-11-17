@@ -1,6 +1,6 @@
 # proofrecord-aar-interop: signed ProofRecord™ and Agent Action Receipts (AAR) interoperability demonstration
 
-**Release candidate v0.1.0-rc.4. Synthetic data only. Not production. Not independently reviewed. Not formal AAR conformance. Not endorsed by AAR.**
+**Release candidate v0.1.0-rc.5 (candidate; unpublished). Synthetic data only. Not production. Not independently reviewed. Not formal AAR conformance. Not endorsed by AAR.**
 
 This package lets anyone check, offline:
 
@@ -17,10 +17,12 @@ python3 -m pip install --require-hashes -r requirements.txt   # PyNaCl 1.6.2 (li
 # ProofRecord + cross-record check. No AAR checkout needed; AAR signatures are NOT checked.
 python3 -B verify_offline.py --proofrecord SIGNED_PROOFRECORD_EXAMPLE.json --key PUBLIC_TEST_KEY.json \
   --aar-bundle AAR_FIXTURE_CITING_PROOFRECORD.cbor --require-outcome
-# expect: MATCH / AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 0
+# expect: MATCH_CROSS_CHECK_ONLY / AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 7
 ```
 
-Full reproduction, including AAR's own verifier and all 97 test rows: see **REPRODUCE.md**.
+Since rc.5, **exit 0 for an AAR comparison means only one thing**: AAR pyref checked the bundle against a relying-party-pinned AAR trust policy (`--aar-trust-policy`), over the same bytes the cross-check read. A cross-check-only MATCH exits 7; a MATCH under producer-declared AAR trust (explicit `--aar-trust-producer-declared`) exits 8; `--aar-pyref` with neither trust option is refused (USAGE, exit 64).
+
+Full reproduction, including AAR's own verifier and all 109 test rows: see **REPRODUCE.md**.
 
 ## Files
 

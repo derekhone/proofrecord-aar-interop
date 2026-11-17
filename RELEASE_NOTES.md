@@ -1,5 +1,23 @@
 # Release notes
 
+## v0.1.0-rc.5 (candidate; unpublished; requires founder approval before any publication)
+
+Remediates the three findings reported by Matthew Visher (with Claude, Anthropic) against the rc.4 release asset on 2026-11-17 (issues #1-#3). rc.4 remains unchanged at tag `v0.1.0-rc.4`.
+
+### Fixed
+- **#1 AAR trust basis not stated / not pinned.** New `--aar-trust-policy FILE`, passed unchanged to pyref's existing `--trust-policy` option at the pinned AAR commit. The report gains `aar_trust_basis` (mode, pinned `root_kids`, trust-store digest and snapshot, policy SHA-256). `--aar-pyref` without a trust option is refused (USAGE/AAR_TRUST_POLICY_REQUIRED, exit 64). Explicit `--aar-trust-producer-declared` gives `MATCH_AAR_TRUST_UNPINNED`, exit 8. epverify also requires pyref to print the trust line that matches the option used.
+- **#2 Bundle read twice.** The bundle is read once. pyref gets a private read-only copy of those bytes, and its reported `bundle_digest` must equal their SHA-256; the cross-check uses the same in-memory bytes. The trust policy is also read once.
+- **#3 Cross-check-only MATCH exited 0.** It is now `MATCH_CROSS_CHECK_ONLY`, exit 7.
+
+### Tests (same-author)
+- `tests/finding_tests.py`: the three findings as tests (N1, N1b, N2, N3). Against the rc.4 tree: 4/4 FAIL (reproduced; N2 executed, not only read). Against rc.5: 4/4 PASS.
+- `tests/run_tests.py`: 109/109 with AAR at the pinned commit (rc.4: 97). Rows X01-X03 and X26 now expect `MATCH_CROSS_CHECK_ONLY`, exit 7 (rc.4 expected exit 0). New rows X36-X38, F13-F17, U20-U23. New fixture `fixtures/aar/MUT_RECEIPT_SIGNATURES_BROKEN.cbor` (AAR_POSITIVE with every receipt signature's last byte flipped; pyref: nonconformant at step 06) and test trust pins in `fixtures/aar_trust/`.
+- `tests/conformant_disagreement_observation.py` now pins each bundle's test trust policy; result unchanged (21 pairs, 16 pyref-conformant but not MATCH).
+
+### Not changed
+ProofRecord format, keys, signature verification, cross-record rules, existing fixtures and recorded rc.4 evidence.
+
+
 ## v0.1.0-rc.4 (release candidate; unpublished; release date to be set at publication)
 
 Cross-record single-use fix found in the final same-author red-team of rc.3. No change to the format, keys, signature verification, existing fixtures or recorded evidence.

@@ -1,7 +1,7 @@
 {
   "upload_type": "software",
-  "title": "proofrecord-aar-interop v0.1.0-rc.4: signed ProofRecord and Agent Action Receipts (AAR) interoperability demonstration",
-  "version": "0.1.0-rc.4",
+  "title": "proofrecord-aar-interop v0.1.0-rc.5: signed ProofRecord and Agent Action Receipts (AAR) interoperability demonstration",
+  "version": "0.1.0-rc.5",
   "creators": [
     {"name": "Hone, Derek", "affiliation": "Remnant Fieldworks Inc."}
   ],

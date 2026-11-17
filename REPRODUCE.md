@@ -36,8 +36,11 @@ python3 -B verify_offline.py --proofrecord SIGNED_PROOFRECORD_EXAMPLE.json --key
 
 # Authorized action == dispatched action, with AAR's own verifier first
 python3 -B verify_offline.py --proofrecord SIGNED_PROOFRECORD_EXAMPLE.json --key PUBLIC_TEST_KEY.json \
-  --aar-bundle AAR_FIXTURE_CITING_PROOFRECORD.cbor --aar-pyref ./aar --at 1735689800 --require-outcome
-# expect MATCH / AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION, exit 0
+  --aar-bundle AAR_FIXTURE_CITING_PROOFRECORD.cbor --aar-pyref ./aar --at 1735689800 --require-outcome \
+  --aar-trust-policy AAR_FIXTURE_TRUST_POLICY.json
+# expect MATCH / AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION, exit 0; the report's aar_trust_basis names the pinned root_kids
+# AAR_FIXTURE_TRUST_POLICY.json is a TEST PIN derived from the fixture itself (tests/make_test_trust_policy.py).
+# A real relying party obtains its AAR trust policy out of band.
 # recorded run: evidence/BINDING_EVIDENCE_POSITIVE.json
 ```
 
@@ -60,7 +63,9 @@ python3 -B verify_offline.py --proofrecord $P/PR_HOLD.json  --key $K --aar-bundl
 
 ```bash
 AAR_DIR=./aar python3 -B tests/run_tests.py
-# expect: TOTAL 97  PASS 97  FAIL 0   (85 without AAR_DIR)
+# expect: TOTAL 109  PASS 109  FAIL 0   (92 without AAR_DIR)
+AAR_DIR=./aar python3 -B tests/finding_tests.py --target . --mode rc5
+# expect: TOTAL 4 PASS 4 (issues #1-#3; against the rc.4 tree with --mode rc4 all 4 FAIL)
 ```
 
 Every row asserts outcome, code **and** exit status. The full list is in `EXPECTED_RESULTS.md`.

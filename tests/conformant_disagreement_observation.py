@@ -12,7 +12,10 @@ vulnerability: AAR treats decision.evaluated_inputs as opaque by design, so a
 conformant bundle can legitimately disagree with a ProofRecord AAR never reads.
 Exit 0 when the run completes (whatever the count); 64 if AAR_DIR is missing.
 """
-import json, os, subprocess, sys
+import json, os, subprocess, sys, tempfile
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from make_test_trust_policy import policy_for  # noqa: E402  (rc.5: test pins only)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AT = "1735689800"
@@ -41,12 +44,17 @@ def main():
         print("AAR_DIR not set (needs an AAR checkout at aab2feca93986f92f29f7672dff3464e05163cb5)")
         return 64
     rows = []
+    tmp = tempfile.mkdtemp(prefix="epobs-")
     for bundle, pr in PAIRS:
+        bpath = os.path.join(ROOT, "fixtures", "aar", bundle + ".cbor")
+        tpath = os.path.join(tmp, bundle + ".trust-policy.json")
+        with open(bpath, "rb") as f, open(tpath, "w") as g:
+            json.dump(policy_for(f.read()), g, sort_keys=True)
         p = subprocess.run([sys.executable, "-B", os.path.join(ROOT, "verify_offline.py"),
                             "--proofrecord", os.path.join(ROOT, "fixtures", "proofrecords", pr + ".json"),
                             "--key", os.path.join(ROOT, "fixtures", "keys", "PUBLIC_TEST_KEY.json"),
                             "--aar-bundle", os.path.join(ROOT, "fixtures", "aar", bundle + ".cbor"),
-                            "--aar-pyref", aar, "--at", AT], capture_output=True, text=True, timeout=900)
+                            "--aar-pyref", aar, "--at", AT, "--aar-trust-policy", tpath], capture_output=True, text=True, timeout=900)
         rep = json.loads(p.stdout)
         conf = rep.get("levels", {}).get("aar_conformance")
         pyref = conf.get("pyref_result") if isinstance(conf, dict) else conf
