@@ -1,6 +1,6 @@
 # Abstract
 
-**proofrecord-aar-interop v0.1.0-rc.4: signed ProofRecord™ and Agent Action Receipts (AAR) interoperability demonstration**
+**proofrecord-aar-interop v0.1.0-rc.5: signed ProofRecord™ and Agent Action Receipts (AAR) interoperability demonstration**
 
 Creator: Derek Hone, Remnant Fieldworks Inc.
 

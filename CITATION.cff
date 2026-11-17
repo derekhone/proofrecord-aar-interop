@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it using these metadata."
 type: software
 title: "proofrecord-aar-interop: signed ProofRecord and Agent Action Receipts (AAR) interoperability demonstration"
-version: "0.1.0-rc.4"
+version: "0.1.0-rc.5"
 license: MIT
 authors:
   - family-names: "Hone"

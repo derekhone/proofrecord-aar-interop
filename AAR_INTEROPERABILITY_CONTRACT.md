@@ -1,6 +1,6 @@
 # AAR interoperability contract (ProofRecord ↔ AAR)
 
-Status: demonstration contract, version `executionproof.proofrecord.v1` citation, release candidate v0.1.0-rc.4. Not endorsed by AAR. Not formal AAR conformance.
+Status: demonstration contract, version `executionproof.proofrecord.v1` citation, release candidate v0.1.0-rc.5. Not endorsed by AAR. Not formal AAR conformance.
 
 AAR pinned: `oneshot2001/aar` @ `aab2feca93986f92f29f7672dff3464e05163cb5` (bundle wire v0.2), `spec/aar-core.cddl`.
 

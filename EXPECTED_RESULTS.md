@@ -34,9 +34,9 @@ Generated from `tests/run_tests.py`; the observed run is in the founder package 
 | P28 | T13 | INVALID/PARSE, exit 2 |
 | P29 | T18 | VALID/PROOFRECORD_ONLY, exit 0 |
 | P30 | T13 | INVALID/KID_UNKNOWN, exit 2 |
-| X01 | T01 | MATCH/AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 0 |
-| X02 | T20 | MATCH/AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 0 |
-| X03 | T03 | MATCH/AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 0 |
+| X01 | T01 | MATCH_CROSS_CHECK_ONLY/AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 7 (rc.4: MATCH, exit 0) |
+| X02 | T20 | MATCH_CROSS_CHECK_ONLY/AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 7 (rc.4: MATCH, exit 0) |
+| X03 | T03 | MATCH_CROSS_CHECK_ONLY/AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 7 (rc.4: MATCH, exit 0) |
 | X04 | T16 | INSUFFICIENT_EVIDENCE/NO_CITATION, exit 5 |
 | X05 | T16 | INSUFFICIENT_EVIDENCE/REF_NOT_CITED, exit 5 |
 | X06 | T16 | MISMATCH/AMBIGUOUS_CITATION, exit 1 |
@@ -59,7 +59,7 @@ Generated from `tests/run_tests.py`; the observed run is in the founder package 
 | X23 | T12 | INSUFFICIENT_EVIDENCE/REF_NOT_CITED, exit 5 |
 | X24 | T12 | INSUFFICIENT_EVIDENCE/REF_NOT_CITED, exit 5 |
 | X25 | T19 | MISMATCH/REPLAY, exit 1 |
-| X26 | T20 | MATCH/AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 0 |
+| X26 | T20 | MATCH_CROSS_CHECK_ONLY/AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 7 (rc.4: MATCH, exit 0) |
 | X27 | T20 | INSUFFICIENT_EVIDENCE/OUTCOME_ABSENT, exit 5 |
 | X28 | T20 | MISMATCH/OUTCOME_NOT_CONSISTENT, exit 1 |
 | X29 | T05 | MISMATCH/PARAMETERS_VALUE, exit 1 |
@@ -103,3 +103,22 @@ Generated from `tests/run_tests.py`; the observed run is in the founder package 
 | U19 | - | detCBOR round-trips the AAR bundle byte-identically |
 
 Arguments for each row are in `tests/run_tests.py` (one line per row).
+
+## Rows added in rc.5 (issues #1-#3)
+
+| ID | Issue | Expected (outcome/code, exit) |
+|---|---|---|
+| X36 | #3 | MATCH_CROSS_CHECK_ONLY/AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_CROSS_CHECK_ONLY, exit 7 (broken AAR receipt signatures) |
+| X37 | #1 | USAGE/TRUST_OPTION_WITHOUT_PYREF, exit 64 |
+| X38 | #1 | USAGE/TRUST_OPTIONS_CONFLICT, exit 64 |
+| F13 | #1 | USAGE/AAR_TRUST_POLICY_REQUIRED, exit 64 |
+| F14 | #1 | MATCH_AAR_TRUST_UNPINNED/AUTHORIZED_ACTION_EQUALS_DISPATCHED_ACTION_AAR_TRUST_UNPINNED, exit 8 |
+| F15 | #1 | AAR_NONCONFORMANT/PYREF, exit 6 (pinned root_kid differs) |
+| F16 | #1 | AAR_NONCONFORMANT/PYREF, exit 6 (pin belongs to another bundle) |
+| F17 | #3 | AAR_NONCONFORMANT/PYREF, exit 6 (broken AAR receipt signatures, pinned) |
+| U20 | #2 | stub pyref reports other bytes: AAR_NONCONFORMANT/PYREF_BUNDLE_DIGEST_MISMATCH, exit 6 |
+| U21 | #2 | stub pyref reports no digest: AAR_NONCONFORMANT/PYREF_BUNDLE_DIGEST_MISMATCH, exit 6 |
+| U22 | #1 | pin supplied, pyref reports producer-declared: AAR_NONCONFORMANT/PYREF_TRUST_BASIS_UNEXPECTED, exit 6 |
+| U23 | - | guard positive control with consistent stub: MATCH, exit 0 |
+
+Since rc.5 every F row passes `--aar-trust-policy fixtures/aar_trust/<bundle>.trust-policy.json` (test pins). Finding tests N1, N1b, N2, N3 are in `tests/finding_tests.py`.
